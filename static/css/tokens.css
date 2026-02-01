@@ -1,0 +1,170 @@
+/* ===================================================================
+   SPROUT SEEDS DESIGN TOKENS
+   All design system variables defined as CSS custom properties
+   ==================================================================== */
+
+:root {
+  /* ===== COLORS: FOUNDATIONAL ===== */
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  /* ===== COLORS: BLUE (Primary) - SPROUT SEEDS SPEC ===== */
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;        /* Primary action color */
+  --color-blue-700: #1d4ed8;        /* Hover state */
+  --color-blue-800: #1e40af;        /* Active state */
+  --color-blue-900: #1e3a8a;
+
+  /* ===== COLORS: GRAY (Neutral) ===== */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  /* ===== COLORS: RED (Destructive/Error) ===== */
+  --color-red-50: #fef2f2;
+  --color-red-100: #fee2e2;
+  --color-red-200: #fecaca;
+  --color-red-300: #fca5a5;
+  --color-red-400: #f87171;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  --color-red-700: #b91c1c;
+  --color-red-800: #991b1b;
+  --color-red-900: #7f1d1d;
+
+  /* ===== COLORS: GREEN (Success) ===== */
+  --color-green-50: #f0fdf4;
+  --color-green-100: #dcfce7;
+  --color-green-200: #bbf7d0;
+  --color-green-300: #86efac;
+  --color-green-400: #4ade80;
+  --color-green-500: #22c55e;
+  --color-green-600: #16a34a;
+  --color-green-700: #15803d;
+  --color-green-800: #166534;
+  --color-green-900: #145231;
+
+  /* ===== COLORS: YELLOW (Warning) ===== */
+  --color-yellow-50: #fffbeb;
+  --color-yellow-100: #fef3c7;
+  --color-yellow-200: #fde68a;
+  --color-yellow-300: #fcd34d;
+  --color-yellow-400: #fbbf24;
+  --color-yellow-500: #f59e0b;
+  --color-yellow-600: #d97706;
+  --color-yellow-700: #b45309;
+  --color-yellow-800: #92400e;
+  --color-yellow-900: #78350f;
+
+  /* ===== SEMANTIC COLORS ===== */
+  --text-primary: var(--color-gray-900);
+  --text-secondary: var(--color-gray-600);
+  --text-tertiary: var(--color-gray-500);
+  --text-disabled: var(--color-gray-400);
+  --text-inverse: var(--color-white);
+  
+  --bg-primary: var(--color-white);
+  --bg-secondary: var(--color-gray-50);
+  --bg-tertiary: var(--color-gray-100);
+  
+  --border-primary: var(--color-gray-200);
+  --border-secondary: var(--color-gray-300);
+  
+  --status-success: var(--color-green-600);
+  --status-error: var(--color-red-600);
+  --status-warning: var(--color-yellow-600);
+  --status-info: var(--color-blue-600);
+
+  /* ===== SPACING SCALE (8px Grid - SPROUT SEEDS SPEC) ===== */
+  --space-0: 0px;
+  --space-100: 2px;
+  --space-200: 4px;
+  --space-300: 8px;           /* Standard base unit */
+  --space-350: 12px;          /* Between base & primary */
+  --space-400: 16px;          /* Primary spacing */
+  --space-450: 24px;          /* Large spacing */
+  --space-500: 32px;          /* Extra large (card padding) */
+  --space-600: 40px;          /* Base multiplier */
+  --space-700: 80px;          /* 2x multiplier */
+  --space-800: 120px;         /* 3x multiplier */
+  --space-900: 160px;         /* 4x multiplier */
+
+  /* ===== BORDER RADIUS - SPROUT SEEDS SPEC ===== */
+  --radius-sm: 6px;           /* Inner - nested elements */
+  --radius-md: 8px;           /* Outer - container corners */
+  --radius-lg: 8px;           /* Standard component radius */
+  --radius-pill: 9999px;      /* Fully rounded (avatars, pills) */
+
+  /* ===== BORDER WIDTH ===== */
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-width-thick: 3px;
+
+  /* ===== SHADOWS (Elevation) - SPROUT SEEDS SPEC ===== */
+  --shadow-xs: 0px 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0px 8px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0px 16px 32px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0px 16px 32px rgba(0, 0, 0, 0.1);
+
+  /* ===== Z-INDEX SCALE ===== */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-notification: 800;
+
+  /* ===== MOTION: DURATION ===== */
+  --motion-duration-fast: 150ms;
+  --motion-duration-medium: 300ms;
+  --motion-duration-slow: 600ms;
+
+  /* ===== MOTION: EASING ===== */
+  --motion-easing-in: cubic-bezier(0.4, 0, 1, 1);
+  --motion-easing-out: cubic-bezier(0, 0, 0.2, 1);
+  --motion-easing-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ===== TYPOGRAPHY: FONT FAMILIES ===== */
+  --font-serif: 'Roboto Serif', 'Georgia', serif;
+  --font-sans: 'Proxima Nova', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', sans-serif;
+  --font-mono: 'Monaco', 'Courier New', monospace;
+
+  /* ===== TYPOGRAPHY: SIZES - SPROUT SEEDS SPEC ===== */
+  --text-xs: 0.75rem;         /* 12px */
+  --text-sm: 0.875rem;        /* 14px - Labels, small UI */
+  --text-base: 1rem;          /* 16px - Body text */
+  --text-lg: 1.125rem;        /* 18px - Titles */
+  --text-xl: 1.25rem;         /* 20px - Larger titles */
+  --text-2xl: 1.5rem;         /* 24px - Section headers (H3) */
+  --text-3xl: 1.875rem;       /* 30px - H2 Subheadings */
+  --text-4xl: 2rem;           /* 32px - Major headings */
+  --text-5xl: 2.5rem;         /* 40px - H1 Page titles */
+
+  /* ===== TYPOGRAPHY: LINE HEIGHTS ===== */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  --line-height-loose: 2;
+
+  /* ===== TYPOGRAPHY: FONT WEIGHTS ===== */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+}

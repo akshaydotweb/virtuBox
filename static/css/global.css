@@ -1,0 +1,360 @@
+/* ===================================================================
+   SPROUT SEEDS GLOBAL STYLES
+   CSS reset, base elements, and utility classes
+   ==================================================================== */
+
+/* ===== CSS RESET ===== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+/* ===== BODY & BASE ELEMENTS ===== */
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  overflow-x: hidden;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+/* ===== CONTAINER ===== */
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding-left: var(--space-600);
+  padding-right: var(--space-600);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-left: var(--space-400);
+    padding-right: var(--space-400);
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding-left: var(--space-300);
+    padding-right: var(--space-300);
+  }
+}
+
+/* ===== MAIN CONTENT ===== */
+
+main {
+  display: block;
+}
+
+/* ===== FOCUS STATES ===== */
+
+:focus-visible {
+  outline: 2px solid var(--status-info);
+  outline-offset: 2px;
+}
+
+/* ===== SCROLLBAR STYLING ===== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray-300);
+  border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-400);
+}
+
+/* ===== IMAGE STYLING ===== */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== HR STYLING ===== */
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-primary);
+  margin: var(--space-600) 0;
+}
+
+/* ===================================================================
+   UTILITY CLASSES
+   ==================================================================== */
+
+/* ===== DISPLAY ===== */
+
+.d-none {
+  display: none;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-inline {
+  display: inline;
+}
+
+.d-inline-block {
+  display: inline-block;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.d-grid {
+  display: grid;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+/* ===== FLEX UTILITIES ===== */
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.items-end {
+  align-items: flex-end;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-stretch {
+  align-items: stretch;
+}
+
+.gap-100 { gap: var(--space-100); }
+.gap-200 { gap: var(--space-200); }
+.gap-300 { gap: var(--space-300); }
+.gap-400 { gap: var(--space-400); }
+.gap-500 { gap: var(--space-500); }
+.gap-600 { gap: var(--space-600); }
+
+/* ===== GRID UTILITIES ===== */
+
+.grid-cols-1 { grid-template-columns: 1fr; }
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+.gap-100 { gap: var(--space-100); }
+.gap-200 { gap: var(--space-200); }
+.gap-300 { gap: var(--space-300); }
+.gap-400 { gap: var(--space-400); }
+.gap-500 { gap: var(--space-500); }
+.gap-600 { gap: var(--space-600); }
+
+/* ===== SPACING: MARGIN ===== */
+
+.m-0 { margin: var(--space-0); }
+.m-200 { margin: var(--space-200); }
+.m-300 { margin: var(--space-300); }
+.m-400 { margin: var(--space-400); }
+.m-500 { margin: var(--space-500); }
+.m-600 { margin: var(--space-600); }
+
+.mt-0 { margin-top: var(--space-0); }
+.mt-200 { margin-top: var(--space-200); }
+.mt-300 { margin-top: var(--space-300); }
+.mt-400 { margin-top: var(--space-400); }
+.mt-500 { margin-top: var(--space-500); }
+.mt-600 { margin-top: var(--space-600); }
+.mt-700 { margin-top: var(--space-700); }
+
+.mb-0 { margin-bottom: var(--space-0); }
+.mb-200 { margin-bottom: var(--space-200); }
+.mb-300 { margin-bottom: var(--space-300); }
+.mb-400 { margin-bottom: var(--space-400); }
+.mb-500 { margin-bottom: var(--space-500); }
+.mb-600 { margin-bottom: var(--space-600); }
+.mb-700 { margin-bottom: var(--space-700); }
+
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+/* ===== SPACING: PADDING ===== */
+
+.p-0 { padding: var(--space-0); }
+.p-200 { padding: var(--space-200); }
+.p-300 { padding: var(--space-300); }
+.p-400 { padding: var(--space-400); }
+.p-500 { padding: var(--space-500); }
+.p-600 { padding: var(--space-600); }
+
+.px-300 { padding-left: var(--space-300); padding-right: var(--space-300); }
+.px-400 { padding-left: var(--space-400); padding-right: var(--space-400); }
+.px-500 { padding-left: var(--space-500); padding-right: var(--space-500); }
+.px-600 { padding-left: var(--space-600); padding-right: var(--space-600); }
+
+.py-300 { padding-top: var(--space-300); padding-bottom: var(--space-300); }
+.py-400 { padding-top: var(--space-400); padding-bottom: var(--space-400); }
+.py-500 { padding-top: var(--space-500); padding-bottom: var(--space-500); }
+.py-600 { padding-top: var(--space-600); padding-bottom: var(--space-600); }
+
+/* ===== WIDTH & HEIGHT ===== */
+
+.w-full { width: 100%; }
+.w-auto { width: auto; }
+.h-full { height: 100%; }
+.h-auto { height: auto; }
+.min-h-screen { min-height: 100vh; }
+
+/* ===== BORDER & ROUNDED ===== */
+
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-full { border-radius: var(--radius-pill); }
+
+.border-thin { border: var(--border-width-thin) solid var(--border-primary); }
+.border-t-thin { border-top: var(--border-width-thin) solid var(--border-primary); }
+.border-b-thin { border-bottom: var(--border-width-thin) solid var(--border-primary); }
+
+/* ===== BACKGROUND COLORS ===== */
+
+.bg-white { background-color: var(--color-white); }
+.bg-primary { background-color: var(--bg-primary); }
+.bg-secondary { background-color: var(--bg-secondary); }
+.bg-tertiary { background-color: var(--bg-tertiary); }
+.bg-success { background-color: var(--status-success); }
+.bg-error { background-color: var(--status-error); }
+.bg-warning { background-color: var(--status-warning); }
+.bg-info { background-color: var(--status-info); }
+
+/* ===== TEXT COLORS ===== */
+
+.text-white { color: var(--color-white); }
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+.text-success { color: var(--status-success); }
+.text-error { color: var(--status-error); }
+.text-warning { color: var(--status-warning); }
+.text-info { color: var(--status-info); }
+
+/* ===== SHADOW UTILITIES ===== */
+
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+
+/* ===== TRANSITIONS ===== */
+
+.transition-fast {
+  transition: all var(--motion-duration-fast) var(--motion-easing-out);
+}
+
+.transition-medium {
+  transition: all var(--motion-duration-medium) var(--motion-easing-out);
+}
+
+.transition-slow {
+  transition: all var(--motion-duration-slow) var(--motion-easing-out);
+}
+
+/* ===== CURSOR ===== */
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-default {
+  cursor: default;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+/* ===== OPACITY ===== */
+
+.opacity-50 { opacity: 0.5; }
+.opacity-75 { opacity: 0.75; }
+.opacity-100 { opacity: 1; }
+
+/* ===== OVERFLOW ===== */
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}

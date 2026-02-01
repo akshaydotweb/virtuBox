@@ -1,0 +1,354 @@
+/* ===================================================================
+   SPROUT SEEDS CARD COMPONENTS
+   Card layouts, sections, and variants
+   ==================================================================== */
+
+/* ===== CARD BASE - SPROUT SEEDS SPEC ===== */
+
+.card {
+  background-color: var(--bg-primary);
+  border: var(--border-width-thin) solid var(--border-primary);
+  border-radius: var(--radius-md);    /* 8px - outer */
+  padding: var(--space-500);          /* 32px */
+  transition: all var(--motion-duration-fast) var(--motion-easing-out);
+  overflow: hidden;
+}
+
+.card.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.card.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.card.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+/* ===== CARD SECTIONS ===== */
+
+.card-header {
+  margin-bottom: var(--space-400);    /* 16px */
+  padding-bottom: var(--space-400);   /* 16px */
+  border-bottom: 1px solid var(--border-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-300);              /* 8px */
+}
+
+.card-header h1,
+.card-header h2,
+.card-header h3,
+.card-header h4,
+.card-header h5,
+.card-header h6 {
+  margin: 0;
+}
+
+.card-header-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-normal);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.card-header-subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: var(--space-100) 0 0 0;
+}
+
+.card-header-actions {
+  display: flex;
+  gap: var(--space-200);
+  align-items: center;
+}
+
+.card-body {
+  margin: 0;
+  padding: 0;
+}
+
+.card-body p:last-child {
+  margin-bottom: 0;
+}
+
+.card-footer {
+  margin-top: var(--space-400);
+  padding-top: var(--space-400);
+  border-top: 1px solid var(--border-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-300);
+}
+
+/* ===== CARD VARIANTS ===== */
+
+/* ===== STANDARD CARD (DEFAULT) ===== */
+
+.card.card-standard {
+  box-shadow: none;
+  border: 1px solid var(--border-primary);
+}
+
+/* ===== ELEVATED CARD ===== */
+
+.card.card-elevated {
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-primary);
+}
+
+.card.card-elevated:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/* ===== INTERACTIVE CARD ===== */
+
+.card.card-interactive {
+  cursor: pointer;
+  border: 1px solid var(--border-primary);
+}
+
+.card.card-interactive:hover {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-secondary);
+  box-shadow: var(--shadow-md);
+}
+
+.card.card-interactive:active {
+  background-color: var(--bg-tertiary);
+}
+
+/* ===== FOCUSED CARD STATE ===== */
+
+.card:focus-within {
+  border-color: var(--status-info);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* ===================================================================
+   CARD LAYOUTS
+   ==================================================================== */
+
+/* ===== CARD GRID ===== */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-600);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-500);
+  }
+}
+
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-500);
+  }
+}
+
+/* ===== CARD GRID VARIANTS ===== */
+
+.card-grid.grid-2 {
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}
+
+@media (max-width: 768px) {
+  .card-grid.grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card-grid.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .card-grid.grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .card-grid.grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card-grid.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .card-grid.grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .card-grid.grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===================================================================
+   CARD CONTENT PATTERNS
+   ==================================================================== */
+
+/* ===== IMAGE CARD ===== */
+
+.card.card-with-image {
+  padding: 0;
+  overflow: hidden;
+}
+
+.card.card-with-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.card.card-with-image .card-body {
+  padding: var(--space-500);
+}
+
+.card.card-with-image .card-footer {
+  padding: 0 var(--space-500) var(--space-500) var(--space-500);
+  margin: 0;
+  border-top: 1px solid var(--border-primary);
+  padding-top: var(--space-400);
+}
+
+/* ===== COMPACT CARD ===== */
+
+.card.card-compact {
+  padding: var(--space-400);
+}
+
+.card.card-compact .card-header,
+.card.card-compact .card-footer {
+  margin-bottom: var(--space-300);
+  margin-top: var(--space-300);
+  padding-bottom: var(--space-300);
+  padding-top: var(--space-300);
+}
+
+/* ===== LARGE CARD ===== */
+
+.card.card-large {
+  padding: var(--space-700);
+}
+
+/* ===================================================================
+   CARD CONTENT ALIGNMENT
+   ==================================================================== */
+
+.card-content-center {
+  text-align: center;
+}
+
+.card-content-center .card-header {
+  justify-content: center;
+  flex-direction: column;
+}
+
+.card-content-center .card-footer {
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* ===================================================================
+   CARD LOADING STATE
+   ==================================================================== */
+
+.card.loading {
+  opacity: 0.6;
+  position: relative;
+  pointer-events: none;
+}
+
+.card.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-top-color: var(--status-info);
+  border-radius: var(--radius-pill);
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ===================================================================
+   CARD EMPTY STATE
+   ==================================================================== */
+
+.card-empty {
+  text-align: center;
+  padding: var(--space-1100);
+  border: 2px dashed var(--border-primary);
+  background-color: var(--bg-secondary);
+}
+
+.card-empty-icon {
+  font-size: var(--text-4xl);
+  margin-bottom: var(--space-400);
+  opacity: 0.5;
+}
+
+.card-empty-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-200);
+}
+
+.card-empty-text {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-400);
+}
+
+/* ===================================================================
+   RESPONSIVE CARD ADJUSTMENTS
+   ==================================================================== */
+
+@media (max-width: 576px) {
+  .card {
+    padding: var(--space-500);
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .card-footer .btn,
+  .card-footer button {
+    width: 100%;
+  }
+}

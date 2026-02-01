@@ -154,7 +154,7 @@ def delete_note(note_id):
     
     return redirect(url_for('dashboard'))
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.clear()
     return redirect(url_for('login'))

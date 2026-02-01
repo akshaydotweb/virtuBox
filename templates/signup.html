@@ -1,48 +1,227 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Sign Up - Notes App</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background-color: #f5f5f5; }
-        .container { max-width: 400px; margin: 100px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        h1 { margin-bottom: 20px; color: #333; text-align: center; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; color: #555; }
-        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
-        button { width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; }
-        button:hover { background-color: #218838; }
-        .error { color: #d32f2f; margin-bottom: 15px; padding: 10px; background-color: #ffebee; border-radius: 4px; }
-        .link { text-align: center; margin-top: 15px; }
-        .link a { color: #007bff; text-decoration: none; }
-        .link a:hover { text-decoration: underline; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Sign Up</h1>
-        
+{% extends "base.html" %}
+
+{% block title %}Sign Up - Notes App{% endblock %}
+
+{% block extra_css %}
+<style>
+  .signup-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-blue-50) 0%, var(--bg-secondary) 100%);
+    padding: var(--space-500);         /* 32px */
+  }
+
+  .signup-card {
+    width: 100%;
+    max-width: 450px;
+  }
+
+  .signup-header {
+    text-align: center;
+    margin-bottom: var(--space-700);  /* 80px */
+  }
+
+  .signup-header h1 {
+    font-size: var(--text-5xl);       /* 40px */
+    margin-bottom: var(--space-350); /* 12px */
+  }
+
+  .signup-header p {
+    font-size: var(--text-base);      /* 16px */
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-300);            /* 8px between form groups (Sprout Stack default) */
+  }
+
+  .signup-footer {
+    text-align: center;
+    margin-top: var(--space-600);     /* 40px */
+    padding-top: var(--space-600);    /* 40px */
+    border-top: 1px solid var(--border-primary);
+  }
+
+  .signup-footer p {
+    margin: 0;
+    font-size: var(--text-sm);        /* 14px */
+    color: var(--text-secondary);
+  }
+
+  .signup-footer a {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .error-banner {
+    background-color: var(--color-red-50);
+    border: 1px solid var(--color-red-200);
+    border-radius: var(--radius-md);  /* 8px */
+    padding: var(--space-400);        /* 16px */
+    margin-bottom: var(--space-500);  /* 32px */
+    display: flex;
+    gap: var(--space-300);            /* 8px */
+    align-items: flex-start;
+    role: alert;
+  }
+
+  .error-banner-icon {
+    color: var(--status-error);
+    font-weight: var(--font-weight-bold);
+    flex-shrink: 0;
+    font-size: var(--text-lg);
+  }
+
+  .error-banner-content {
+    flex: 1;
+  }
+
+  .error-banner-title {
+    font-weight: var(--font-weight-semibold);
+    color: var(--status-error);
+    margin-bottom: var(--space-200); /* 4px */
+    font-size: var(--text-sm);
+  }
+
+  .error-banner-text {
+    color: var(--color-red-700);
+    font-size: var(--text-sm);       /* 14px */
+    margin: 0;
+  }
+
+  .requirements {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);  /* 8px */
+    padding: var(--space-400);        /* 16px */
+    margin-top: var(--space-400);     /* 16px */
+    font-size: var(--text-xs);        /* 12px */
+    color: var(--text-secondary);
+  }
+
+  .requirements-title {
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-300); /* 8px */
+    font-size: var(--text-sm);
+  }
+
+  .requirements-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .requirements-list li {
+    padding: var(--space-200) 0;      /* 4px */
+    display: flex;
+    gap: var(--space-200);            /* 4px */
+    align-items: flex-start;
+  }
+
+  .requirements-list li::before {
+    content: '✓';
+    color: var(--status-success);
+    font-weight: var(--font-weight-bold);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 576px) {
+    .signup-page {
+      padding: var(--space-400);      /* 16px */
+    }
+
+    .signup-header {
+      margin-bottom: var(--space-600);
+    }
+
+    .signup-header h1 {
+      font-size: var(--text-3xl);     /* 30px - reduced 20% */
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="signup-page">
+    <div class="card signup-card shadow-md">
+        <!-- Header -->
+        <div class="signup-header">
+            <h1>Create Account</h1>
+            <p>Start organizing your notes today</p>
+        </div>
+
+        <!-- Error Banner -->
         {% if error %}
-            <div class="error">{{ error }}</div>
+        <div class="error-banner">
+            <div class="error-banner-icon">⚠</div>
+            <div class="error-banner-content">
+                <div class="error-banner-title">Signup Failed</div>
+                <p class="error-banner-text">{{ error }}</p>
+            </div>
+        </div>
         {% endif %}
-        
-        <form method="POST">
+
+        <!-- Signup Form -->
+        <form method="POST" class="signup-form">
+            <!-- Username Field -->
             <div class="form-group">
-                <label>Username (minimum 3 characters)</label>
-                <input type="text" name="username" required>
+                <label for="username">Username</label>
+                <input 
+                    type="text" 
+                    id="username"
+                    name="username" 
+                    required
+                    minlength="3"
+                    placeholder="Choose a username"
+                    aria-required="true"
+                    aria-describedby="username-help"
+                >
+                <small class="form-helper" id="username-help">Minimum 3 characters</small>
             </div>
-            
+
+            <!-- Password Field -->
             <div class="form-group">
-                <label>Password (minimum 4 characters)</label>
-                <input type="password" name="password" required>
+                <label for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password"
+                    name="password" 
+                    required
+                    minlength="4"
+                    placeholder="Create a secure password"
+                    aria-required="true"
+                    aria-describedby="password-help"
+                >
+                <small class="form-helper" id="password-help">Minimum 4 characters</small>
+                
+                <!-- Requirements Box -->
+                <div class="requirements">
+                    <div class="requirements-title">Requirements:</div>
+                    <ul class="requirements-list">
+                        <li>At least 4 characters</li>
+                        <li>Mix of upper and lower case</li>
+                        <li>Include at least one number</li>
+                    </ul>
+                </div>
             </div>
-            
-            <button type="submit">Sign Up</button>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary btn-md btn-full">
+                Create Account
+            </button>
         </form>
-        
-        <div class="link">
-            Already have an account? <a href="{{ url_for('login') }}">Login</a>
+
+        <!-- Footer -->
+        <div class="signup-footer">
+            <p>
+                Already have an account? <a href="{{ url_for('login') }}">Sign in</a>
+            </p>
         </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}
