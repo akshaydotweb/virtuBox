@@ -1,63 +1,403 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard - Notes App</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background-color: #f5f5f5; }
-        .navbar { background-color: #333; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .navbar h2 { font-size: 20px; }
-        .navbar a { color: white; text-decoration: none; padding: 10px 15px; background-color: #007bff; border-radius: 4px; cursor: pointer; }
-        .navbar a:hover { background-color: #0056b3; }
-        .container { max-width: 900px; margin: 30px auto; padding: 20px; }
-        h1 { margin-bottom: 20px; color: #333; }
-        .btn-create { display: inline-block; padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; margin-bottom: 20px; }
-        .btn-create:hover { background-color: #218838; }
-        .notes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .note-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .note-card h3 { margin-bottom: 10px; color: #333; }
-        .note-card p { color: #666; margin-bottom: 15px; max-height: 100px; overflow: hidden; }
-        .note-actions { display: flex; gap: 10px; }
-        .btn-edit, .btn-delete { padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block; }
-        .btn-edit { background-color: #007bff; color: white; }
-        .btn-edit:hover { background-color: #0056b3; }
-        .btn-delete { background-color: #dc3545; color: white; }
-        .btn-delete:hover { background-color: #c82333; }
-        .empty { text-align: center; padding: 40px; color: #999; }
-    </style>
-</head>
-<body>
-    <div class="navbar">
-        <h2>Notes App</h2>
-        <div>
-            <span>Welcome, {{ username }}!</span>
-            <a href="{{ url_for('logout') }}">Logout</a>
-        </div>
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Notes App{% endblock %}
+
+{% block extra_css %}
+<style>
+  /* ===== HEADER/NAVBAR (Page Header) ===== */
+  .dashboard-header {
+    background-color: white;
+    border-bottom: 1px solid var(--color-gray-200);
+    padding: var(--space-400) var(--space-500);           /* 16px vertical, 32px horizontal (Sprout standard) */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .dashboard-header h2 {
+    font-size: var(--text-base);                          /* 16px (Sprout Size sm base) */
+    font-family: var(--font-sans);                       /* Proxima Nova */
+    font-weight: var(--font-weight-semibold);             /* 600 (SemiBold) */
+    color: var(--text-primary);                           /* Gray 900 */
+    margin: 0;
+    letter-spacing: -0.01em;                            /* Subtle compression */
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-400);                                /* 16px */
+    flex-wrap: nowrap;                                   /* Keep on one line */
+    flex-shrink: 1;                                      /* Allow shrinking if needed */
+  }
+
+  .header-right p {
+    color: var(--text-secondary);                         /* Gray 600 */
+    font-size: var(--text-sm);                            /* 14px (Sprout Size sm) */
+    margin: 0;
+    line-height: var(--line-height-normal);              /* 1.5 */
+    font-weight: var(--font-weight-normal);               /* 400 (Regular) */
+    white-space: nowrap;                                 /* Prevent wrapping */
+  }
+
+  .header-right strong {
+    font-weight: var(--font-weight-semibold);             /* 600 */
+    color: var(--text-primary);
+  }
+
+  .logout-btn {
+    padding: var(--space-200) var(--space-300);          /* 4px 8px */
+    background-color: white;                            /* Clean white */
+    color: var(--color-red-600);                          /* Red 600 text */
+    border: 1px solid var(--color-red-300);             /* Red 300 border */
+    border-radius: var(--radius-md);                      /* 8px (Sprout outer) */
+    font-size: var(--text-xs);                            /* 12px (Sprout Size xs) */
+    font-weight: var(--font-weight-semibold);             /* 600 (SemiBold) */
+    cursor: pointer;
+    transition: all 150ms ease-out;                      /* Sprout motion */
+    line-height: var(--line-height-normal);              /* 1.5 */
+    height: 28px;                                         /* Fixed height for alignment */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logout-btn:hover {
+    background-color: var(--color-red-50);
+    border-color: var(--color-red-400);
+    color: var(--color-red-700);
+  }
+
+  .logout-btn:active {
+    background-color: var(--color-red-100);
+    border-color: var(--color-red-500);
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .dashboard-page {
+    min-height: calc(100vh - 200px);
+    background-color: var(--bg-primary);
+    padding: var(--space-600) var(--space-500);          /* 40px vertical, 32px horizontal */
+  }
+
+  .dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .dashboard-header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-600);                      /* 40px */
+  }
+
+  .dashboard-header-section h1 {
+    font-size: var(--text-5xl);                           /* 40px */
+    font-family: var(--font-serif);                      /* Roboto Serif */
+    font-weight: var(--font-weight-normal);               /* 400 */
+    color: var(--text-primary);                           /* Gray 900 */
+    margin: 0;
+    letter-spacing: -0.02em;                            /* Subtle compression for headings */
+    line-height: var(--line-height-tight);              /* 1.2 */
+  }
+
+  .create-button {
+    padding: var(--space-200) var(--space-400);          /* 4px 16px */
+    background-color: var(--color-blue-600);
+    color: white;
+    text-decoration: none;                              /* Remove link underline */
+    border-radius: var(--radius-md);                      /* 8px */
+    font-size: var(--text-sm);                            /* 14px */
+    font-weight: var(--font-weight-semibold);             /* 600 */
+    border: none;
+    cursor: pointer;
+    transition: all 150ms ease-out;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-200);                                /* 4px */
+  }
+
+  .create-button:hover {
+    background-color: var(--color-blue-700);
+    color: white;                                        /* Maintain white text on hover */
+    text-decoration: none;                              /* Prevent underline on hover */
+  }
+
+  .create-button:active {
+    background-color: var(--color-blue-800);
+    color: white;                                        /* Maintain white text on active */
+    text-decoration: none;                              /* Prevent underline on active */
+  }
+
+  .create-button:visited {
+    color: white;                                        /* Maintain white for visited state */
+  }
+
+  /* ===== NOTES GRID ===== */
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-500);                                /* 32px */
+    margin-bottom: var(--space-600);                      /* 40px */
+  }
+
+  .note-card {
+    background-color: white;
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);                      /* 8px */
+    padding: var(--space-500);                            /* 32px */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.08);       /* shadow-md */
+    transition: all 150ms ease-out;
+  }
+
+  .note-card:hover {
+    box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.1);       /* shadow-lg on hover */
+    transform: translateY(-2px);
+  }
+
+  .note-card-title {
+    font-size: var(--text-xl);                            /* 20px */
+    font-weight: var(--font-weight-semibold);             /* 600 */
+    color: var(--text-primary);
+    margin: 0 0 var(--space-200) 0;                       /* 4px bottom */
+    line-height: var(--line-height-tight);               /* 1.2 */
+  }
+
+  .note-card-preview {
+    font-size: var(--text-sm);                            /* 14px */
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-400) 0;                       /* 16px bottom */
+    line-height: var(--line-height-normal);              /* 1.5 */
+    max-height: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  .note-card-meta {
+    font-size: var(--text-xs);                            /* 12px */
+    color: var(--color-gray-500);
+    margin-bottom: var(--space-400);                      /* 16px */
+  }
+
+  .note-card-actions {
+    display: flex;
+    gap: var(--space-300);                                /* 8px */
+    margin-top: auto;
+  }
+
+  .note-btn {
+    flex: 1;
+    padding: var(--space-200) var(--space-300);          /* 4px 8px */
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);                      /* 8px */
+    background-color: white;
+    color: var(--text-primary);
+    text-decoration: none;                              /* Remove link underline */
+    text-align: center;
+    font-size: var(--text-xs);                            /* 12px */
+    font-weight: var(--font-weight-semibold);             /* 600 */
+    cursor: pointer;
+    transition: all 150ms ease-out;
+  }
+
+  .note-btn:hover {
+    background-color: var(--color-gray-50);
+    border-color: var(--color-gray-400);
+    text-decoration: none;                              /* Prevent underline on hover */
+  }
+
+  .note-btn-delete {
+    border-color: var(--color-red-200);
+    color: var(--color-red-600);
+  }
+
+  .note-btn-delete:hover {
+    background-color: var(--color-red-50);
+    border-color: var(--color-red-300);
+    color: var(--color-red-700);
+    text-decoration: none;                              /* Prevent underline on hover */
+  }
+
+  /* ===== EMPTY STATE ===== */
+  .empty-state {
+    text-align: center;
+    padding: var(--space-700) var(--space-500);          /* 80px vertical, 32px horizontal */
+  }
+
+  .empty-state-icon {
+    font-size: 64px;
+    margin-bottom: var(--space-400);                      /* 16px */
+    opacity: 0.3;
+  }
+
+  .empty-state h2 {
+    font-size: var(--text-2xl);                           /* 24px */
+    font-weight: var(--font-weight-semibold);             /* 600 */
+    color: var(--text-primary);
+    margin: 0 0 var(--space-200) 0;                       /* 4px bottom */
+  }
+
+  .empty-state p {
+    font-size: var(--text-base);                          /* 16px */
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-400) 0;                       /* 16px bottom */
+  }
+
+  .empty-state-link {
+    color: var(--color-blue-600);
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);             /* 600 */
+    transition: color 150ms ease-out;
+  }
+
+  .empty-state-link:hover {
+    color: var(--color-blue-700);
+    text-decoration: underline;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .dashboard-page {
+      padding: var(--space-500) var(--space-400);        /* 32px vertical, 16px horizontal */
+    }
+
+    .dashboard-header {
+      padding: var(--space-300) var(--space-400);        /* 8px vertical, 16px horizontal */
+      flex-direction: column;
+      gap: var(--space-300);                              /* 8px */
+    }
+
+    .header-right {
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      gap: var(--space-300);                              /* 8px */
+    }
+
+    .dashboard-header-section {
+      flex-direction: column;
+      gap: var(--space-300);                              /* 8px */
+      align-items: flex-start;
+      margin-bottom: var(--space-500);                    /* 32px */
+    }
+
+    .dashboard-header-section h1 {
+      font-size: var(--text-4xl);                         /* 32px */
+    }
+
+    .notes-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-400);                              /* 16px */
+    }
+  }
+
+  @media (max-width: 576px) {
+    .dashboard-page {
+      padding: var(--space-400) var(--space-400);        /* 16px */
+    }
+
+    .dashboard-header {
+      padding: var(--space-300) var(--space-400);        /* 8px vertical, 16px horizontal (reduced for mobile) */
+    }
+
+    .dashboard-header-section h1 {
+      font-size: var(--text-3xl);                         /* 28px */
+    }
+
+    .create-button {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .note-card {
+      padding: var(--space-400);                          /* 16px */
+    }
+
+    .note-card-actions {
+      gap: var(--space-200);                              /* 4px */
+    }
+
+    .empty-state {
+      padding: var(--space-600) var(--space-400);        /* 40px vertical, 16px horizontal */
+    }
+
+    .header-right {
+      flex-direction: column;
+    }
+
+    .logout-btn {
+      width: 100%;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Header/Navbar -->
+<div class="dashboard-header">
+  <h2>Notes App</h2>
+  <div class="header-right">
+    <p>Welcome, <strong>{{ username }}</strong>!</p>
+    <form method="POST" action="{{ url_for('logout') }}" style="margin: 0;">
+      <button type="submit" class="logout-btn">Logout</button>
+    </form>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="dashboard-page">
+  <div class="dashboard-container">
+    <!-- Header Section -->
+    <div class="dashboard-header-section">
+      <h1>My Notes</h1>
+      <a href="{{ url_for('create_note') }}" class="create-button">
+        <span>+</span> New Note
+      </a>
     </div>
-    
-    <div class="container">
-        <h1>My Notes</h1>
-        
-        <a href="{{ url_for('create_note') }}" class="btn-create">+ Create New Note</a>
-        
-        {% if notes %}
-            <div class="notes-grid">
-                {% for note in notes %}
-                    <div class="note-card">
-                        <h3>{{ note.title }}</h3>
-                        <p>{{ note.content }}</p>
-                        <div class="note-actions">
-                            <a href="{{ url_for('edit_note', note_id=note.id) }}" class="btn-edit">Edit</a>
-                            <a href="{{ url_for('delete_note', note_id=note.id) }}" class="btn-delete" onclick="return confirm('Are you sure?')">Delete</a>
-                        </div>
-                    </div>
-                {% endfor %}
+
+    <!-- Notes Grid or Empty State -->
+    {% if notes %}
+      <div class="notes-grid">
+        {% for note in notes %}
+          <div class="note-card">
+            <h3 class="note-card-title">{{ note.title }}</h3>
+            <p class="note-card-preview">{{ note.content }}</p>
+            <p class="note-card-meta">
+              {% if note.created_at %}
+                {{ note.created_at.strftime('%b %d, %Y') if note.created_at else 'No date' }}
+              {% else %}
+                Created earlier
+              {% endif %}
+            </p>
+            <div class="note-card-actions">
+              <a href="{{ url_for('edit_note', note_id=note.id) }}" class="note-btn">
+                Edit
+              </a>
+              <a href="{{ url_for('delete_note', note_id=note.id) }}" class="note-btn note-btn-delete" onclick="return confirm('Are you sure you want to delete this note?')">
+                Delete
+              </a>
             </div>
-        {% else %}
-            <div class="empty">
-                <p>No notes yet. <a href="{{ url_for('create_note') }}">Create one now!</a></p>
-            </div>
-        {% endif %}
-    </div>
-</body>
-</html>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-state-icon">📝</div>
+        <h2>No notes yet</h2>
+        <p>Create your first note to get started</p>
+        <a href="{{ url_for('create_note') }}" class="empty-state-link">Create a new note →</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
