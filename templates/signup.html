@@ -4,81 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - Notes App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <!-- CSS FILES -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tokens.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/typography.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/utilities.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
 </head>
 <body>
-    <div class="container container-sm" style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
-        <div class="card" style="width: 100%; max-width: 450px;">
-            <div style="text-align: center; margin-bottom: var(--space-6);">
-                <h1 style="font-size: 2rem; margin-bottom: var(--space-3);">Create Account</h1>
-                <p class="text-secondary">Join to start taking notes</p>
+    <main class="auth-container">
+        <div class="auth-card">
+            <div class="auth-card-header">
+                <h1>Create Account</h1>
+                <p class="auth-card-subtitle">Join to start taking notes</p>
             </div>
-
-            {% if error %}
-                <div class="notification notification-error" role="alert">
-                    <div>{{ error }}</div>
-                </div>
-            {% endif %}
-
-            <form method="POST" class="flex flex-col">
-                <div class="form-group">
-                    <label for="username" class="label-required">Username</label>
-                    <input 
-                        type="text" 
-                        id="username"
-                        name="username" 
-                        class="form-input"
-                        placeholder="Choose a username"
-                        required
-                        autofocus
-                        aria-required="true"
-                        minlength="3"
-                        maxlength="80"
-                    >
-                    <span class="form-help">3-80 characters. Letters, numbers, and underscores</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="password" class="label-required">Password</label>
-                    <input 
-                        type="password" 
-                        id="password"
-                        name="password" 
-                        class="form-input"
-                        placeholder="Create a password"
-                        required
-                        aria-required="true"
-                        minlength="4"
-                    >
-                    <span class="form-help">At least 4 characters for security</span>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-full mt">
-                    Create Account
-                </button>
-            </form>
-
-            <div style="text-align: center; margin-top: var(--space-5);">
-                <p class="text-secondary">Already have an account? 
-                    <a href="{{ url_for('login') }}" style="color: var(--color-blue-600); text-decoration: none; font-weight: 500; transition: color 0.2s;">Sign in</a>
+            
+            <div class="auth-card-body">
+                {% if error %}
+                    <div class="auth-error" role="alert">{{ error }}</div>
+                {% endif %}
+                
+                <form method="POST" class="auth-form" novalidate>
+                    <div class="form-group">
+                        <label for="username" class="auth-required">
+                            Username
+                            <span class="auth-optional">(minimum 3 characters)</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="username"
+                            name="username" 
+                            required
+                            minlength="3"
+                            aria-required="true"
+                            aria-describedby="username-help"
+                            placeholder="Choose a unique username"
+                        >
+                        <p id="username-help" class="auth-helper">At least 3 characters, case-sensitive</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password" class="auth-required">
+                            Password
+                            <span class="auth-optional">(minimum 4 characters)</span>
+                        </label>
+                        <input 
+                            type="password" 
+                            id="password"
+                            name="password" 
+                            required
+                            minlength="4"
+                            aria-required="true"
+                            aria-describedby="password-help"
+                            placeholder="Create a strong password"
+                        >
+                        <p id="password-help" class="auth-helper">At least 4 characters for your security</p>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success btn-md auth-submit">
+                        Create Account
+                    </button>
+                </form>
+            </div>
+            
+            <div class="auth-card-footer">
+                <p class="auth-footer-link">
+                    Already have an account? 
+                    <a href="{{ url_for('login') }}">Sign in</a>
                 </p>
             </div>
         </div>
-    </div>
-
-    <script>
-        // Show notification auto-dismiss
-        const notification = document.querySelector('.notification');
-        if (notification) {
-            setTimeout(() => {
-                notification.style.animation = 'fadeOut 0.3s ease-out forwards';
-            }, 4000);
-        }
-    </script>
-    <style>
-        @keyframes fadeOut {
-            to { opacity: 0; }
-        }
-    </style>
+    </main>
 </body>
 </html>

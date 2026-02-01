@@ -4,179 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Note - Notes App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-        .navbar {
-            background-color: var(--color-blue-900);
-            color: var(--color-text-inverse);
-            padding: var(--space-4) var(--space-5);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow-300);
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f5f5f5; color: #333; }
         
-        .navbar-title {
-            font-family: var(--font-primary);
-            font-size: var(--fs-h2);
-            margin: 0;
-        }
+        .navbar { background-color: #333; color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .navbar h1 { font-size: 1.5rem; }
         
-        .char-count-display {
-            font-size: var(--fs-small);
-            color: var(--color-text-secondary);
-            margin-top: var(--space-2);
-            display: flex;
-            justify-content: space-between;
-        }
+        .container { max-width: 700px; margin: 2rem auto; padding: 0 1rem; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 2rem; }
+        h1 { margin-bottom: 2rem; color: #333; }
         
-        .char-count-bar {
-            width: 100%;
-            height: 4px;
-            background-color: var(--color-border-light);
-            border-radius: var(--radius-pill);
-            margin-top: var(--space-2);
-            overflow: hidden;
-        }
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; color: #555; font-weight: 600; }
+        input, textarea { width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 6px; font-size: 1rem; font-family: inherit; transition: border-color 0.2s; }
+        input:focus, textarea:focus { border-color: #007bff; outline: none; box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1); }
         
-        .char-count-progress {
-            height: 100%;
-            background-color: var(--color-green-500);
-            border-radius: var(--radius-pill);
-            transition: width var(--transition-fast);
-        }
+        textarea { resize: vertical; min-height: 250px; }
         
-        .char-count-progress.warning {
-            background-color: var(--color-yellow-500);
-        }
+        .button-group { display: flex; gap: 1rem; margin-top: 2rem; }
+        button, .btn-cancel { flex: 1; padding: 0.75rem; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.2s; text-decoration: none; display: flex; align-items: center; justify-content: center; }
         
-        .char-count-progress.danger {
-            background-color: var(--color-red-500);
-        }
+        button { background-color: #007bff; color: white; }
+        button:hover { background-color: #0056b3; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3); }
+        button:active { transform: translateY(0); }
+        button:focus { outline: 3px solid #ffd700; outline-offset: 2px; }
         
-        .form-actions {
-            display: flex;
-            gap: var(--space-4);
-            margin-top: var(--space-6);
-        }
+        .btn-cancel { background-color: #6c757d; color: white; }
+        .btn-cancel:hover { background-color: #5a6268; }
+        .btn-cancel:focus { outline: 3px solid #ffd700; outline-offset: 2px; }
         
-        .form-actions button,
-        .form-actions a {
-            flex: 1;
-        }
+        .error { color: #721c24; margin-bottom: 1.5rem; padding: 1rem; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 6px; border-left: 4px solid #dc3545; }
+        .error strong { display: block; font-weight: 600; }
         
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                gap: var(--space-3);
-            }
+        .char-count { font-size: 0.85rem; color: #666; margin-top: 0.5rem; }
+        
+        @media (max-width: 600px) {
+            .container { padding: 1.5rem; margin: 1rem auto; }
+            .button-group { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <h2 class="navbar-title">Notes</h2>
-        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary btn-small">Back to Dashboard</a>
-    </div>
-
-    <div class="container container-md">
-        <div style="margin-bottom: var(--space-6);">
-            <h1>Edit Note</h1>
-            <p class="text-secondary">Update your note</p>
-        </div>
-
+    <nav class="navbar">
+        <h1>📝 Notes App</h1>
+        <a href="{{ url_for('dashboard') }}" style="color: white; text-decoration: none; background-color: #007bff; padding: 0.5rem 1rem; border-radius: 6px;">Back to Dashboard</a>
+    </nav>
+    
+    <main class="container">
+        <h1>✏️ Edit Note</h1>
+        
         {% if error %}
-            <div class="notification notification-error" role="alert">
-                <span>⚠️</span>
-                <div>{{ error }}</div>
+            <div class="error" role="alert">
+                <strong>Validation Error</strong>
+                {{ error }}
             </div>
         {% endif %}
-
-        <form method="POST" class="flex flex-col">
+        
+        <form method="POST" novalidate>
             <div class="form-group">
-                <label for="title" class="label-required">Title</label>
+                <label for="title">Title</label>
                 <input 
                     type="text" 
                     id="title"
                     name="title" 
-                    class="form-input"
-                    value="{{ note.title }}"
-                    placeholder="Note title"
-                    required
-                    autofocus
-                    aria-required="true"
+                    value="{{ note.title }}" 
                     maxlength="100"
-                >
-                <span class="form-help">Maximum 100 characters</span>
+                    required 
+                    aria-required="true"
+                    autofocus>
             </div>
-
+            
             <div class="form-group">
-                <label for="content" class="label-required">Content</label>
+                <label for="content">Content</label>
                 <textarea 
                     id="content"
                     name="content" 
-                    class="form-input large"
-                    placeholder="Edit your note content..."
-                    required
+                    required 
                     aria-required="true"
-                    maxlength="5000"
-                    onkeyup="updateCharCount()"
-                >{{ note.content }}</textarea>
-                <div class="char-count-display">
-                    <span>Content</span>
-                    <span id="char-display">{{ note.content|length }} / 5000</span>
-                </div>
-                <div class="char-count-bar">
-                    <div class="char-count-progress" id="char-progress" style="width: {{ (note.content|length / 5000 * 100)|int }}%"></div>
+                    maxlength="5000">{{ note.content }}</textarea>
+                <div class="char-count" aria-live="polite">
+                    <span id="char-count">{{ note.content|length }}</span> / 5000 characters
                 </div>
             </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">
-                    Update Note
-                </button>
-                <a href="{{ url_for('dashboard') }}" class="btn btn-secondary" style="display: flex; align-items: center; justify-content: center;">
-                    Cancel
-                </a>
+            
+            <div class="button-group">
+                <button type="submit">Update Note</button>
+                <a href="{{ url_for('dashboard') }}" class="btn-cancel">Cancel</a>
             </div>
         </form>
-    </div>
-
+    </main>
+    
     <script>
-        function updateCharCount() {
-            const textarea = document.getElementById('content');
-            const count = textarea.value.length;
-            const max = 5000;
-            const percentage = (count / max) * 100;
-            
-            document.getElementById('char-display').textContent = `${count} / ${max}`;
-            
-            const progress = document.getElementById('char-progress');
-            progress.style.width = percentage + '%';
-            
-            progress.classList.remove('warning', 'danger');
-            if (percentage > 75) {
-                progress.classList.add('danger');
-            } else if (percentage > 50) {
-                progress.classList.add('warning');
-            }
-        }
-
-        // Initialize character count
-        updateCharCount();
-
-        // Show notification auto-dismiss
-        const notification = document.querySelector('.notification');
-        if (notification) {
-            setTimeout(() => {
-                notification.style.animation = 'fadeOut 0.3s ease-out forwards';
-            }, 4000);
-        }
+        // Character counter with live region update
+        const contentField = document.getElementById('content');
+        const charCount = document.getElementById('char-count');
+        
+        contentField.addEventListener('input', function() {
+            charCount.textContent = this.value.length;
+        });
     </script>
-    <style>
-        @keyframes fadeOut {
-            to { opacity: 0; }
-        }
-    </style>
 </body>
 </html>

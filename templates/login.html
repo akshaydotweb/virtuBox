@@ -4,80 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Notes App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <!-- CSS FILES -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tokens.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/typography.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/utilities.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
 </head>
 <body>
-    <div class="container container-sm" style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
-        <div class="card" style="width: 100%; max-width: 450px;">
-            <div style="text-align: center; margin-bottom: var(--space-6);">
-                <h1 style="font-size: 2rem; margin-bottom: var(--space-3);">Notes</h1>
-                <p class="text-secondary">Sign in to your account</p>
+    <main class="auth-container">
+        <div class="auth-card">
+            <div class="auth-card-header">
+                <h1>Welcome Back</h1>
+                <p class="auth-card-subtitle">Sign in to access your notes</p>
             </div>
-
-            {% if error %}
-                <div class="notification notification-error" role="alert">
-                    <div>{{ error }}</div>
-                </div>
-            {% endif %}
-
-            <form method="POST" class="flex flex-col">
-                <div class="form-group">
-                    <label for="username" class="label-required">Username</label>
-                    <input 
-                        type="text" 
-                        id="username"
-                        name="username" 
-                        class="form-input"
-                        placeholder="Enter your username"
-                        required
-                        autofocus
-                        aria-required="true"
-                        minlength="3"
-                    >
-                    <span class="form-help">At least 3 characters</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="password" class="label-required">Password</label>
-                    <input 
-                        type="password" 
-                        id="password"
-                        name="password" 
-                        class="form-input"
-                        placeholder="Enter your password"
-                        required
-                        aria-required="true"
-                        minlength="4"
-                    >
-                    <span class="form-help">At least 4 characters</span>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-full mt">
-                    Sign In
-                </button>
-            </form>
-
-            <div style="text-align: center; margin-top: var(--space-5);">
-                <p class="text-secondary">Don't have an account? 
-                    <a href="{{ url_for('signup') }}" style="color: var(--color-blue-600); text-decoration: none; font-weight: 500; transition: color 0.2s;">Create one</a>
+            
+            <div class="auth-card-body">
+                {% if error %}
+                    <div class="auth-error" role="alert">{{ error }}</div>
+                {% endif %}
+                
+                <form method="POST" class="auth-form" novalidate>
+                    <div class="form-group">
+                        <label for="username" class="auth-required">Username</label>
+                        <input 
+                            type="text" 
+                            id="username"
+                            name="username" 
+                            required
+                            aria-required="true"
+                            aria-describedby="username-help"
+                            placeholder="Enter your username"
+                        >
+                        <p id="username-help" class="auth-helper">Case-sensitive username</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password" class="auth-required">Password</label>
+                        <input 
+                            type="password" 
+                            id="password"
+                            name="password" 
+                            required
+                            aria-required="true"
+                            placeholder="Enter your password"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-md auth-submit">
+                        Sign In
+                    </button>
+                </form>
+            </div>
+            
+            <div class="auth-card-footer">
+                <p class="auth-footer-link">
+                    Don't have an account? 
+                    <a href="{{ url_for('signup') }}">Create one</a>
                 </p>
             </div>
         </div>
-    </div>
-
-    <script>
-        // Show notification auto-dismiss
-        const notification = document.querySelector('.notification');
-        if (notification) {
-            setTimeout(() => {
-                notification.style.animation = 'fadeOut 0.3s ease-out forwards';
-            }, 4000);
-        }
-    </script>
-    <style>
-        @keyframes fadeOut {
-            to { opacity: 0; }
-        }
-    </style>
+    </main>
 </body>
 </html>
