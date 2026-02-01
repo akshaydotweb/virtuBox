@@ -1,22 +1,26 @@
-/* ========================================
+/* ===================================================================
    SPROUT SEEDS DESIGN TOKENS
-   ======================================== */
+   All design system variables defined as CSS custom properties
+   ==================================================================== */
 
 :root {
-  /* COLOR PALETTE - BLUES */
-  --color-blue-50: #f0f6fb;
-  --color-blue-100: #e0edf7;
-  --color-blue-200: #b8d4ed;
-  --color-blue-300: #90bbe2;
-  --color-blue-400: #4a89d8;
-  --color-blue-500: #2563eb;
-  --color-blue-600: #1d4ed8;
-  --color-blue-700: #1e40af;
-  --color-blue-800: #1e3a8a;
-  --color-blue-900: #172554;
+  /* ===== COLORS: FOUNDATIONAL ===== */
+  --color-black: #000000;
+  --color-white: #ffffff;
 
-  /* COLOR PALETTE - GRAYS */
-  --color-gray-0: #ffffff;
+  /* ===== COLORS: BLUE (Primary) - SPROUT SEEDS SPEC ===== */
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;        /* Primary action color */
+  --color-blue-700: #1d4ed8;        /* Hover state */
+  --color-blue-800: #1e40af;        /* Active state */
+  --color-blue-900: #1e3a8a;
+
+  /* ===== COLORS: GRAY (Neutral) ===== */
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
   --color-gray-200: #e5e7eb;
@@ -28,141 +32,139 @@
   --color-gray-800: #1f2937;
   --color-gray-900: #111827;
 
-  /* COLOR PALETTE - GREENS */
-  --color-green-50: #f0fdf4;
-  --color-green-100: #dcfce7;
-  --color-green-200: #bbf7d0;
-  --color-green-300: #86efac;
-  --color-green-500: #22c55e;
-  --color-green-600: #16a34a;
-  --color-green-700: #15803d;
-
-  /* COLOR PALETTE - REDS */
+  /* ===== COLORS: RED (Destructive/Error) ===== */
   --color-red-50: #fef2f2;
   --color-red-100: #fee2e2;
   --color-red-200: #fecaca;
   --color-red-300: #fca5a5;
+  --color-red-400: #f87171;
   --color-red-500: #ef4444;
   --color-red-600: #dc2626;
   --color-red-700: #b91c1c;
+  --color-red-800: #991b1b;
+  --color-red-900: #7f1d1d;
 
-  /* COLOR PALETTE - YELLOWS */
+  /* ===== COLORS: GREEN (Success) ===== */
+  --color-green-50: #f0fdf4;
+  --color-green-100: #dcfce7;
+  --color-green-200: #bbf7d0;
+  --color-green-300: #86efac;
+  --color-green-400: #4ade80;
+  --color-green-500: #22c55e;
+  --color-green-600: #16a34a;
+  --color-green-700: #15803d;
+  --color-green-800: #166534;
+  --color-green-900: #145231;
+
+  /* ===== COLORS: YELLOW (Warning) ===== */
   --color-yellow-50: #fffbeb;
   --color-yellow-100: #fef3c7;
   --color-yellow-200: #fde68a;
   --color-yellow-300: #fcd34d;
-  --color-yellow-500: #eab308;
-  --color-yellow-600: #ca8a04;
-  --color-yellow-700: #a16207;
+  --color-yellow-400: #fbbf24;
+  --color-yellow-500: #f59e0b;
+  --color-yellow-600: #d97706;
+  --color-yellow-700: #b45309;
+  --color-yellow-800: #92400e;
+  --color-yellow-900: #78350f;
 
-  /* SEMANTIC COLORS */
-  --color-primary: var(--color-blue-600);
-  --color-primary-hover: var(--color-blue-700);
-  --color-primary-active: var(--color-blue-800);
-  --color-primary-disabled: var(--color-blue-200);
-  --color-primary-light-bg: var(--color-blue-50);
+  /* ===== SEMANTIC COLORS ===== */
+  --text-primary: var(--color-gray-900);
+  --text-secondary: var(--color-gray-600);
+  --text-tertiary: var(--color-gray-500);
+  --text-disabled: var(--color-gray-400);
+  --text-inverse: var(--color-white);
+  
+  --bg-primary: var(--color-white);
+  --bg-secondary: var(--color-gray-50);
+  --bg-tertiary: var(--color-gray-100);
+  
+  --border-primary: var(--color-gray-200);
+  --border-secondary: var(--color-gray-300);
+  
+  --status-success: var(--color-green-600);
+  --status-error: var(--color-red-600);
+  --status-warning: var(--color-yellow-600);
+  --status-info: var(--color-blue-600);
 
-  --color-success: var(--color-green-600);
-  --color-success-hover: var(--color-green-700);
-  --color-success-light-bg: var(--color-green-50);
+  /* ===== SPACING SCALE (8px Grid - SPROUT SEEDS SPEC) ===== */
+  --space-0: 0px;
+  --space-100: 2px;
+  --space-200: 4px;
+  --space-300: 8px;           /* Standard base unit */
+  --space-350: 12px;          /* Between base & primary */
+  --space-400: 16px;          /* Primary spacing */
+  --space-450: 24px;          /* Large spacing */
+  --space-500: 32px;          /* Extra large (card padding) */
+  --space-600: 40px;          /* Base multiplier */
+  --space-700: 80px;          /* 2x multiplier */
+  --space-800: 120px;         /* 3x multiplier */
+  --space-900: 160px;         /* 4x multiplier */
 
-  --color-error: var(--color-red-600);
-  --color-error-hover: var(--color-red-700);
-  --color-error-light-bg: var(--color-red-50);
+  /* ===== BORDER RADIUS - SPROUT SEEDS SPEC ===== */
+  --radius-sm: 6px;           /* Inner - nested elements */
+  --radius-md: 8px;           /* Outer - container corners */
+  --radius-lg: 8px;           /* Standard component radius */
+  --radius-pill: 9999px;      /* Fully rounded (avatars, pills) */
 
-  --color-warning: var(--color-yellow-600);
-  --color-warning-hover: var(--color-yellow-700);
-  --color-warning-light-bg: var(--color-yellow-50);
+  /* ===== BORDER WIDTH ===== */
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-width-thick: 3px;
 
-  --color-info: var(--color-blue-600);
-  --color-info-light-bg: var(--color-blue-50);
+  /* ===== SHADOWS (Elevation) - SPROUT SEEDS SPEC ===== */
+  --shadow-xs: 0px 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0px 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0px 8px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0px 16px 32px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0px 16px 32px rgba(0, 0, 0, 0.1);
 
-  /* TEXT COLORS */
-  --color-text-primary: var(--color-gray-900);
-  --color-text-secondary: var(--color-gray-600);
-  --color-text-tertiary: var(--color-gray-500);
-  --color-text-inverse: var(--color-gray-0);
-  --color-text-disabled: var(--color-gray-400);
-
-  /* BACKGROUND COLORS */
-  --color-bg-primary: var(--color-gray-0);
-  --color-bg-secondary: var(--color-gray-50);
-  --color-bg-tertiary: var(--color-gray-100);
-  --color-bg-overlay: rgba(0, 0, 0, 0.5);
-
-  /* BORDER COLORS */
-  --color-border-primary: var(--color-gray-300);
-  --color-border-secondary: var(--color-gray-200);
-  --color-border-focus: var(--color-primary);
-
-  /* SPACING SCALE (8px base) */
-  --space-0: 0;
-  --space-1: 0.25rem; /* 4px */
-  --space-2: 0.5rem; /* 8px */
-  --space-3: 0.75rem; /* 12px */
-  --space-4: 1rem; /* 16px */
-  --space-5: 1.25rem; /* 20px */
-  --space-6: 1.5rem; /* 24px */
-  --space-7: 1.75rem; /* 28px */
-  --space-8: 2rem; /* 32px */
-  --space-9: 2.5rem; /* 40px */
-  --space-10: 3rem; /* 48px */
-  --space-12: 3.5rem; /* 56px */
-  --space-16: 4rem; /* 64px */
-
-  /* ELEVATION / SHADOWS */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-
-  /* BORDER RADIUS */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-full: 9999px;
-
-  /* Z-INDEX SCALE */
-  --z-base: 0;
+  /* ===== Z-INDEX SCALE ===== */
   --z-dropdown: 100;
   --z-sticky: 200;
   --z-fixed: 300;
   --z-modal-backdrop: 400;
   --z-modal: 500;
   --z-popover: 600;
-  --z-notification: 700;
+  --z-tooltip: 700;
+  --z-notification: 800;
 
-  /* MOTION / ANIMATION */
-  --duration-fast: 150ms;
-  --duration-normal: 300ms;
-  --duration-slow: 600ms;
+  /* ===== MOTION: DURATION ===== */
+  --motion-duration-fast: 150ms;
+  --motion-duration-medium: 300ms;
+  --motion-duration-slow: 600ms;
 
-  --easing-ease-in: cubic-bezier(0.4, 0, 1, 1);
-  --easing-ease-out: cubic-bezier(0, 0, 0.2, 1);
-  --easing-ease-inout: cubic-bezier(0.4, 0, 0.2, 1);
+  /* ===== MOTION: EASING ===== */
+  --motion-easing-in: cubic-bezier(0.4, 0, 1, 1);
+  --motion-easing-out: cubic-bezier(0, 0, 0.2, 1);
+  --motion-easing-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* TRANSITION DEFAULTS */
-  --transition-fast: all var(--duration-fast) var(--easing-ease-out);
-  --transition-normal: all var(--duration-normal) var(--easing-ease-out);
-  --transition-slow: all var(--duration-slow) var(--easing-ease-inout);
+  /* ===== TYPOGRAPHY: FONT FAMILIES ===== */
+  --font-serif: 'Roboto Serif', 'Georgia', serif;
+  --font-sans: 'Proxima Nova', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', sans-serif;
+  --font-mono: 'Monaco', 'Courier New', monospace;
 
-  /* BREAKPOINTS */
-  --breakpoint-mobile: 0;
-  --breakpoint-tablet: 768px;
-  --breakpoint-desktop: 1024px;
-  --breakpoint-wide: 1280px;
+  /* ===== TYPOGRAPHY: SIZES - SPROUT SEEDS SPEC ===== */
+  --text-xs: 0.75rem;         /* 12px */
+  --text-sm: 0.875rem;        /* 14px - Labels, small UI */
+  --text-base: 1rem;          /* 16px - Body text */
+  --text-lg: 1.125rem;        /* 18px - Titles */
+  --text-xl: 1.25rem;         /* 20px - Larger titles */
+  --text-2xl: 1.5rem;         /* 24px - Section headers (H3) */
+  --text-3xl: 1.875rem;       /* 30px - H2 Subheadings */
+  --text-4xl: 2rem;           /* 32px - Major headings */
+  --text-5xl: 2.5rem;         /* 40px - H1 Page titles */
 
-  /* OPACITY SCALE */
-  --opacity-0: 0;
-  --opacity-5: 0.05;
-  --opacity-10: 0.1;
-  --opacity-20: 0.2;
-  --opacity-30: 0.3;
-  --opacity-40: 0.4;
-  --opacity-50: 0.5;
-  --opacity-60: 0.6;
-  --opacity-70: 0.7;
-  --opacity-80: 0.8;
-  --opacity-90: 0.9;
-  --opacity-100: 1;
+  /* ===== TYPOGRAPHY: LINE HEIGHTS ===== */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  --line-height-loose: 2;
+
+  /* ===== TYPOGRAPHY: FONT WEIGHTS ===== */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 }

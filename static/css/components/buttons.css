@@ -1,0 +1,351 @@
+/* ===================================================================
+   SPROUT SEEDS BUTTON COMPONENTS
+   All button variants, sizes, and states
+   ==================================================================== */
+
+/* ===== BUTTON BASE - SPROUT SEEDS SPEC ===== */
+
+button,
+.btn,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);          /* 14px */
+  font-weight: var(--font-weight-semibold);  /* 600 */
+  line-height: var(--line-height-normal);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: var(--radius-md);    /* 8px - outer radius */
+  padding: 12px 24px;                 /* Precisely 40px height */
+  transition: all var(--motion-duration-fast) var(--motion-easing-out);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-300);              /* 8px */
+  white-space: nowrap;
+  user-select: none;
+  text-decoration: none;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+button:disabled,
+.btn:disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled,
+input[type="reset"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===== BUTTON FOCUS STATE ===== */
+
+button:focus-visible,
+.btn:focus-visible,
+input[type="button"]:focus-visible,
+input[type="submit"]:focus-visible,
+input[type="reset"]:focus-visible {
+  outline: 2px solid var(--status-info);
+  outline-offset: 2px;
+}
+
+/* ===================================================================
+   BUTTON VARIANTS
+   ==================================================================== */
+
+/* ===== PRIMARY BUTTON ===== */
+
+.btn-primary,
+button.btn-primary,
+input[type="submit"] {
+  background-color: var(--color-blue-600);
+  color: var(--color-white);
+  border: 1px solid transparent;
+}
+
+.btn-primary:hover,
+button.btn-primary:hover,
+input[type="submit"]:hover {
+  background-color: var(--color-blue-700);
+}
+
+.btn-primary:active,
+button.btn-primary:active,
+input[type="submit"]:active {
+  background-color: var(--color-blue-800);
+}
+
+.btn-primary:disabled,
+button.btn-primary:disabled,
+input[type="submit"]:disabled {
+  background-color: var(--color-gray-300);
+  color: var(--text-disabled);
+}
+
+/* ===== SECONDARY BUTTON ===== */
+
+.btn-secondary,
+button.btn-secondary {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-secondary);
+}
+
+.btn-secondary:hover,
+button.btn-secondary:hover {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-primary);
+}
+
+.btn-secondary:active,
+button.btn-secondary:active {
+  background-color: var(--border-primary);
+}
+
+.btn-secondary:disabled,
+button.btn-secondary:disabled {
+  background-color: var(--bg-tertiary);
+  color: var(--text-disabled);
+  border-color: var(--border-primary);
+}
+
+/* ===== DESTRUCTIVE BUTTON ===== */
+
+.btn-destructive,
+button.btn-destructive {
+  background-color: var(--color-red-600);
+  color: var(--color-white);
+  border: 1px solid transparent;
+}
+
+.btn-destructive:hover,
+button.btn-destructive:hover {
+  background-color: var(--color-red-700);
+}
+
+.btn-destructive:active,
+button.btn-destructive:active {
+  background-color: var(--color-red-800);
+}
+
+.btn-destructive:disabled,
+button.btn-destructive:disabled {
+  background-color: var(--color-gray-300);
+  color: var(--text-disabled);
+}
+
+/* ===== GHOST BUTTON ===== */
+
+.btn-ghost,
+button.btn-ghost {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid transparent;
+}
+
+.btn-ghost:hover,
+button.btn-ghost:hover {
+  background-color: var(--bg-secondary);
+}
+
+.btn-ghost:active,
+button.btn-ghost:active {
+  background-color: var(--bg-tertiary);
+}
+
+.btn-ghost:disabled,
+button.btn-ghost:disabled {
+  color: var(--text-disabled);
+}
+
+/* ===== TEXT BUTTON ===== */
+
+.btn-text,
+button.btn-text {
+  background-color: transparent;
+  color: var(--status-info);
+  border: none;
+  padding: 8px 12px;
+}
+
+.btn-text:hover,
+button.btn-text:hover {
+  color: var(--color-blue-700);
+  text-decoration: underline;
+}
+
+.btn-text:active,
+button.btn-text:active {
+  color: var(--color-blue-800);
+}
+
+.btn-text:disabled,
+button.btn-text:disabled {
+  color: var(--text-disabled);
+}
+
+/* ===================================================================
+   BUTTON SIZES
+   ==================================================================== */
+
+/* ===== SMALL BUTTON - 32px height ===== */
+
+.btn-sm,
+button.btn-sm {
+  font-size: var(--text-xs);          /* 12px */
+  padding: 8px 16px;                  /* Precisely 32px height */
+}
+
+/* ===== MEDIUM BUTTON (DEFAULT) - 40px height ===== */
+
+.btn-md,
+button.btn-md {
+  font-size: var(--text-sm);          /* 14px */
+  padding: 12px 24px;                 /* Precisely 40px height */
+}
+
+/* ===== LARGE BUTTON - 48px height ===== */
+
+.btn-lg,
+button.btn-lg {
+  font-size: var(--text-base);        /* 16px */
+  padding: 16px 32px;                 /* Precisely 48px height */
+}
+
+/* ===== FULL-WIDTH BUTTON ===== */
+
+.btn-full,
+button.btn-full {
+  width: 100%;
+  display: flex;
+}
+
+/* ===================================================================
+   BUTTON STATES
+   ==================================================================== */
+
+/* ===== LOADING STATE ===== */
+
+.btn.loading,
+button.loading,
+input[type="button"].loading,
+input[type="submit"].loading,
+input[type="reset"].loading {
+  position: relative;
+  color: transparent;
+}
+
+.btn.loading::after,
+button.loading::after,
+input[type="button"].loading::after,
+input[type="submit"].loading::after,
+input[type="reset"].loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: rgba(255, 255, 255, 1);
+  border-radius: var(--radius-pill);
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== ICON BUTTONS ===== */
+
+.btn-icon {
+  padding: 8px;
+  width: 32px;
+  height: 32px;
+}
+
+.btn-icon.btn-md {
+  width: 40px;
+  height: 40px;
+}
+
+.btn-icon.btn-lg {
+  width: 48px;
+  height: 48px;
+}
+
+.btn-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-icon.btn-md svg {
+  width: 24px;
+  height: 24px;
+}
+
+.btn-icon.btn-lg svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* ===== BUTTON GROUP ===== */
+
+.btn-group {
+  display: inline-flex;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.btn-group .btn,
+.btn-group button {
+  border-radius: 0;
+  flex: 1;
+}
+
+.btn-group .btn:first-child,
+.btn-group button:first-child {
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+}
+
+.btn-group .btn:last-child,
+.btn-group button:last-child {
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.btn-group .btn + .btn,
+.btn-group button + button {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ===================================================================
+   BUTTON LINK (Button styled as link)
+   ==================================================================== */
+
+a.btn {
+  text-decoration: none;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+a.btn:hover {
+  text-decoration: none;
+}
+
+/* ===================================================================
+   RESPONSIVE BUTTON SIZES
+   ==================================================================== */
+
+@media (max-width: 576px) {
+  .btn-full,
+  button.btn-full {
+    width: 100%;
+  }
+
+  .btn-lg,
+  button.btn-lg {
+    padding: 12px 16px;
+    font-size: var(--text-sm);
+  }
+}

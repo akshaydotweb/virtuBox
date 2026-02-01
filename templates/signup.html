@@ -1,82 +1,227 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Notes App</title>
-    
-    <!-- CSS FILES -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/tokens.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/typography.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/utilities.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
-</head>
-<body>
-    <main class="auth-container">
-        <div class="auth-card">
-            <div class="auth-card-header">
-                <h1>Create Account</h1>
-                <p class="auth-card-subtitle">Join to start taking notes</p>
-            </div>
-            
-            <div class="auth-card-body">
-                {% if error %}
-                    <div class="auth-error" role="alert">{{ error }}</div>
-                {% endif %}
-                
-                <form method="POST" class="auth-form" novalidate>
-                    <div class="form-group">
-                        <label for="username" class="auth-required">
-                            Username
-                            <span class="auth-optional">(minimum 3 characters)</span>
-                        </label>
-                        <input 
-                            type="text" 
-                            id="username"
-                            name="username" 
-                            required
-                            minlength="3"
-                            aria-required="true"
-                            aria-describedby="username-help"
-                            placeholder="Choose a unique username"
-                        >
-                        <p id="username-help" class="auth-helper">At least 3 characters, case-sensitive</p>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="password" class="auth-required">
-                            Password
-                            <span class="auth-optional">(minimum 4 characters)</span>
-                        </label>
-                        <input 
-                            type="password" 
-                            id="password"
-                            name="password" 
-                            required
-                            minlength="4"
-                            aria-required="true"
-                            aria-describedby="password-help"
-                            placeholder="Create a strong password"
-                        >
-                        <p id="password-help" class="auth-helper">At least 4 characters for your security</p>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-success btn-md auth-submit">
-                        Create Account
-                    </button>
-                </form>
-            </div>
-            
-            <div class="auth-card-footer">
-                <p class="auth-footer-link">
-                    Already have an account? 
-                    <a href="{{ url_for('login') }}">Sign in</a>
-                </p>
+{% extends "base.html" %}
+
+{% block title %}Sign Up - Notes App{% endblock %}
+
+{% block extra_css %}
+<style>
+  .signup-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-blue-50) 0%, var(--bg-secondary) 100%);
+    padding: var(--space-500);         /* 32px */
+  }
+
+  .signup-card {
+    width: 100%;
+    max-width: 450px;
+  }
+
+  .signup-header {
+    text-align: center;
+    margin-bottom: var(--space-700);  /* 80px */
+  }
+
+  .signup-header h1 {
+    font-size: var(--text-5xl);       /* 40px */
+    margin-bottom: var(--space-350); /* 12px */
+  }
+
+  .signup-header p {
+    font-size: var(--text-base);      /* 16px */
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-300);            /* 8px between form groups (Sprout Stack default) */
+  }
+
+  .signup-footer {
+    text-align: center;
+    margin-top: var(--space-600);     /* 40px */
+    padding-top: var(--space-600);    /* 40px */
+    border-top: 1px solid var(--border-primary);
+  }
+
+  .signup-footer p {
+    margin: 0;
+    font-size: var(--text-sm);        /* 14px */
+    color: var(--text-secondary);
+  }
+
+  .signup-footer a {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .error-banner {
+    background-color: var(--color-red-50);
+    border: 1px solid var(--color-red-200);
+    border-radius: var(--radius-md);  /* 8px */
+    padding: var(--space-400);        /* 16px */
+    margin-bottom: var(--space-500);  /* 32px */
+    display: flex;
+    gap: var(--space-300);            /* 8px */
+    align-items: flex-start;
+    role: alert;
+  }
+
+  .error-banner-icon {
+    color: var(--status-error);
+    font-weight: var(--font-weight-bold);
+    flex-shrink: 0;
+    font-size: var(--text-lg);
+  }
+
+  .error-banner-content {
+    flex: 1;
+  }
+
+  .error-banner-title {
+    font-weight: var(--font-weight-semibold);
+    color: var(--status-error);
+    margin-bottom: var(--space-200); /* 4px */
+    font-size: var(--text-sm);
+  }
+
+  .error-banner-text {
+    color: var(--color-red-700);
+    font-size: var(--text-sm);       /* 14px */
+    margin: 0;
+  }
+
+  .requirements {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);  /* 8px */
+    padding: var(--space-400);        /* 16px */
+    margin-top: var(--space-400);     /* 16px */
+    font-size: var(--text-xs);        /* 12px */
+    color: var(--text-secondary);
+  }
+
+  .requirements-title {
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-300); /* 8px */
+    font-size: var(--text-sm);
+  }
+
+  .requirements-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .requirements-list li {
+    padding: var(--space-200) 0;      /* 4px */
+    display: flex;
+    gap: var(--space-200);            /* 4px */
+    align-items: flex-start;
+  }
+
+  .requirements-list li::before {
+    content: '✓';
+    color: var(--status-success);
+    font-weight: var(--font-weight-bold);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 576px) {
+    .signup-page {
+      padding: var(--space-400);      /* 16px */
+    }
+
+    .signup-header {
+      margin-bottom: var(--space-600);
+    }
+
+    .signup-header h1 {
+      font-size: var(--text-3xl);     /* 30px - reduced 20% */
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="signup-page">
+    <div class="card signup-card shadow-md">
+        <!-- Header -->
+        <div class="signup-header">
+            <h1>Create Account</h1>
+            <p>Start organizing your notes today</p>
+        </div>
+
+        <!-- Error Banner -->
+        {% if error %}
+        <div class="error-banner">
+            <div class="error-banner-icon">⚠</div>
+            <div class="error-banner-content">
+                <div class="error-banner-title">Signup Failed</div>
+                <p class="error-banner-text">{{ error }}</p>
             </div>
         </div>
-    </main>
-</body>
-</html>
+        {% endif %}
+
+        <!-- Signup Form -->
+        <form method="POST" class="signup-form">
+            <!-- Username Field -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input 
+                    type="text" 
+                    id="username"
+                    name="username" 
+                    required
+                    minlength="3"
+                    placeholder="Choose a username"
+                    aria-required="true"
+                    aria-describedby="username-help"
+                >
+                <small class="form-helper" id="username-help">Minimum 3 characters</small>
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password"
+                    name="password" 
+                    required
+                    minlength="4"
+                    placeholder="Create a secure password"
+                    aria-required="true"
+                    aria-describedby="password-help"
+                >
+                <small class="form-helper" id="password-help">Minimum 4 characters</small>
+                
+                <!-- Requirements Box -->
+                <div class="requirements">
+                    <div class="requirements-title">Requirements:</div>
+                    <ul class="requirements-list">
+                        <li>At least 4 characters</li>
+                        <li>Mix of upper and lower case</li>
+                        <li>Include at least one number</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary btn-md btn-full">
+                Create Account
+            </button>
+        </form>
+
+        <!-- Footer -->
+        <div class="signup-footer">
+            <p>
+                Already have an account? <a href="{{ url_for('login') }}">Sign in</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
