@@ -1,48 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Notes App</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background-color: #f5f5f5; }
-        .container { max-width: 400px; margin: 100px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        h1 { margin-bottom: 20px; color: #333; text-align: center; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; color: #555; }
-        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
-        button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; }
-        button:hover { background-color: #0056b3; }
-        .error { color: #d32f2f; margin-bottom: 15px; padding: 10px; background-color: #ffebee; border-radius: 4px; }
-        .link { text-align: center; margin-top: 15px; }
-        .link a { color: #007bff; text-decoration: none; }
-        .link a:hover { text-decoration: underline; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Login</h1>
-        
-        {% if error %}
-            <div class="error">{{ error }}</div>
-        {% endif %}
-        
-        <form method="POST">
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" name="username" required>
+    <div class="container container-sm" style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+        <div class="card" style="width: 100%; max-width: 450px;">
+            <div style="text-align: center; margin-bottom: var(--space-6);">
+                <h1 style="font-size: 2rem; margin-bottom: var(--space-3);">Notes</h1>
+                <p class="text-secondary">Sign in to your account</p>
             </div>
-            
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" name="password" required>
+
+            {% if error %}
+                <div class="notification notification-error" role="alert">
+                    <div>{{ error }}</div>
+                </div>
+            {% endif %}
+
+            <form method="POST" class="flex flex-col">
+                <div class="form-group">
+                    <label for="username" class="label-required">Username</label>
+                    <input 
+                        type="text" 
+                        id="username"
+                        name="username" 
+                        class="form-input"
+                        placeholder="Enter your username"
+                        required
+                        autofocus
+                        aria-required="true"
+                        minlength="3"
+                    >
+                    <span class="form-help">At least 3 characters</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="label-required">Password</label>
+                    <input 
+                        type="password" 
+                        id="password"
+                        name="password" 
+                        class="form-input"
+                        placeholder="Enter your password"
+                        required
+                        aria-required="true"
+                        minlength="4"
+                    >
+                    <span class="form-help">At least 4 characters</span>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full mt">
+                    Sign In
+                </button>
+            </form>
+
+            <div style="text-align: center; margin-top: var(--space-5);">
+                <p class="text-secondary">Don't have an account? 
+                    <a href="{{ url_for('signup') }}" style="color: var(--color-blue-600); text-decoration: none; font-weight: 500; transition: color 0.2s;">Create one</a>
+                </p>
             </div>
-            
-            <button type="submit">Login</button>
-        </form>
-        
-        <div class="link">
-            Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a>
         </div>
     </div>
+
+    <script>
+        // Show notification auto-dismiss
+        const notification = document.querySelector('.notification');
+        if (notification) {
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.3s ease-out forwards';
+            }, 4000);
+        }
+    </script>
+    <style>
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
+    </style>
 </body>
 </html>
